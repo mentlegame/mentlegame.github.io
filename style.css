@@ -1,0 +1,229 @@
+:root {
+	--cell-size: 1.5em; /* 24px */
+	--cell-radius: 0.5em; /* 10px */
+	--cell-border-size: 0.15em; /* 2px */
+	--font-size: 1.1em; /* 18px */
+	--color-inactive: lightgray;
+	--color-default: gray;
+	--color-wrong: black;
+	--color-close: #c9b458;
+	--color-correct: #6aaa64;
+}
+
+body, select {
+	font-family: Corbel, Consolas;
+}
+
+#main {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+    align-items: center;
+    flex-direction: column;
+	width: fit-content;
+}
+
+#container > div {
+	margin: 5px auto;
+}
+
+#gameboard {
+	width: min-content;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#gameboard .row, #keyboard .row {
+	display: flex;
+}
+
+#keyboard {
+	width: fit-content;
+}
+#keyboard .row {
+	justify-content: center;
+}
+
+.cell {
+	width: var(--cell-size);
+	height: var(--cell-size);
+	margin: 4px;
+	text-align: center;
+	line-height: 200%;
+	border-radius: var(--cell-radius);
+
+	font-family: Corbel;
+	font-weight: bold;
+	font-size: var(--font-size);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	text-transform: uppercase;
+	user-select: none;
+	
+	border-width: var(--cell-border-size);
+	border-style: solid;
+	
+	color: white;
+}
+
+#gameboard .active .cell, #keyboard .cell:not(.impossible):not(.maybe) {
+	color: black;
+}
+
+.inactive .cell {
+	border-color: var(--color-inactive);
+}
+.active .cell {
+	border-color: var(--color-default);
+}
+.guessed .cell {
+	border-color: var(--color-default);
+	background-color: var(--color-default);
+	color: white;
+}
+.final .cell {
+	border-color: var(--color-default);
+	background-color: var(--color-default);
+	color: white;
+}
+
+.guessed .wrong {
+	border-color: var(--color-wrong);
+	background-color: var(--color-wrong);
+}
+.guessed .close {
+	border-color: var(--color-close);
+	background-color: var(--color-close);
+}
+.guessed .correct {
+	border-color: var(--color-correct);
+	background-color: var(--color-correct);
+}
+.row:not(.guessed) .divider {
+	visibility: hidden;
+}
+
+
+.divider {
+	width: 3px;
+	border-radius: 5px;
+	background-color: var(--color-inactive);
+	margin-right: 4px;
+	pointer-events: none;
+	margin: 4px;
+}
+
+.inactive .wrong,
+.inactive .close,
+.inactive .correct,
+.active .wrong,
+.active .close,
+.active .correct,
+.final .wrong,
+.final .close,
+.final .correct {
+	visibility: hidden !important;
+}
+
+.final {
+	border-top: 3px solid var(--color-inactive);
+}
+
+.impossible {
+	border-color: var(--color-wrong) !important;
+	background-color: var(--color-wrong) !important;
+}
+
+.maybe, #keyboard .maybe {
+	border-color: var(--color-close);
+	background-color: var(--color-close);
+}
+
+#keyboard .override_no, #gameboard .guessed .override_no {
+	border-color: var(--color-wrong) !important;
+	background-color: var(--color-wrong) !important;
+}
+#keyboard .override_maybe, #gameboard .guessed .override_maybe {
+	border-color: var(--color-close) !important;
+	background-color: var(--color-close) !important;
+}
+#keyboard .override_yes, #gameboard .guessed .override_yes {
+	border-color: var(--color-correct) !important;
+	background-color: var(--color-correct) !important;
+}
+
+
+.victory .cell:not(.wrong):not(.close) {
+	border-color: var(--color-correct) !important;
+	background-color: var(--color-correct) !important;
+}
+
+.hidden {
+	display: none;
+}
+
+#keyboard .cell:not(.maybe) {
+	background-color: var(--color-inactive);
+	border-color: var(--color-inactive);
+}
+
+.key_enter {
+    text-transform: capitalize;
+    width: fit-content;
+    padding: 0 5px;
+}
+
+#timer {
+	font-family: Corbel, Consolas;
+	font-size: 24px;
+}
+
+
+#start, #confirm, #clear {
+	font-family: Corbel, Consolas;
+	font-size: 16px;
+	height: 24px;
+	width: 100px;
+	border-radius: 10px;
+	font-weight: bold;
+	border: 2px solid var(--color-active);
+}
+
+#start, #clear {
+	background-color: var(--color-inactive);
+}
+#confirm {
+	animation: bg-slide 2s linear;
+	background: linear-gradient(to left, var(--color-inactive) 50%, #eeeeee 51%);
+    background-size: 200% 200%;
+	background-position: 100% 0%;
+}
+
+@keyframes bg-slide {
+    0%	{background-position: 0% 0% }
+    100%{background-position: 100% 0% }
+}
+
+#game {
+	display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+	width: 100%;
+}
+
+#keyboard .cell:not(.key_enter) {
+	width: 20px !important;
+}
